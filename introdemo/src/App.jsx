@@ -1,66 +1,80 @@
-const Header = (props) => {
-  console.log(props)
-  return (
-    <>
-    <h1>{props.course}</h1>
-    </>    
-  )
-}
+// import { use, useState } from "react"
 
-const Part = (props) =>{
-  console.log(props.part.name)
-  return(
-    <>
-    <p>{props.part.name} {props.part.exercises}</p>
-    </>
-  )
-}
+// const History = (props) => {
+//   if (props.allClicks.length == 0){
+//     return(
+//     <div>
+//       the app is used by pressing the buttons
+//     </div>
+//     )
+//   }
+//   return(
+//     <div>
+//       button pressed history: {props.allClicks.join(" ")}
+//     </div>
+//   )
+// }
 
-const Content = (props) =>{
-  console.log(props.parts[0].name)
-  return(
-  <>
-  <Part part={props.parts[0]}/>
-  <Part part={props.parts[1]}/>
-  <Part part={props.parts[2]}/>
-  </>
-  )
-}
+// const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
-const Total = (props) =>{
-  console.log(props)
-  return(
-    <>
-    <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
-    </>
-  )
+// const App = () => {
+//   const [left, setLeft] = useState(0)
+//   const [right, setRight] = useState(0)
+//   const [allClicks, setAll] = useState([])
+//   const [total, setTotal] = useState(0)
 
-}
+//   const handleLeftClick = () => {
+//     setAll(allClicks.concat('L'))
+//     setLeft(left+1)
+//     setTotal(total+1)
+//   }
+//   const handleRightClick = () => {
+//     setAll(allClicks.concat('R'))
+//     setRight(right+1)
+//     setTotal(total+1)
+//   }
+
+//   return (
+//     <div>
+//       {left}
+//       <Button onClick={handleLeftClick} text="left"/>
+//       <Button onClick={handleRightClick} text="right"/>
+//       {right}
+//       <br/>
+//       total: {total}
+//       <br/>
+//       <History allClicks={allClicks}/>
+//     </div>
+//   )
+// }
+
+import { useState } from 'react'
+
+const Display = ({text}) => <><h1>{text}</h1></>
+
+const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  const goodIncrement = () => setGood(good+1)
+  const neutralIncrement = () => setNeutral(neutral+1)
+  const badIncrement = () => setBad(bad+1)
 
   return (
     <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+      <Display text="give feedback" />
+      <Button onClick={goodIncrement} text="good"/>
+      <Button onClick={neutralIncrement} text="neutral"/>
+      <Button onClick={badIncrement} text="bad"/>
+
+      <Display text={"statistics"}/>
+      <p>good {good}</p>
+      <p>neutral {neutral}</p>
+      <p>bad {bad}</p>
     </div>
   )
 }
