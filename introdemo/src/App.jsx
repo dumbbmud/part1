@@ -54,30 +54,30 @@ const Display = ({text}) => <><h1>{text}</h1></>
 
 const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
+const StatisticLine = (props) => {
+  console.log(props)
+  return(
+    <div><p>{props.text} {props.count}</p></div>
+  )
+}
 
 const Statistics = ({good, bad, neutral}) => {
 
-  const displayAverage = () => <div>average {(good*1 + bad*-1)/(good+bad+neutral)}</div>
-  const displayPositive = () => <div>positive {good*100/(good+bad+neutral)}%</div>
+  const displayAverage = () => <>{(good*1 + bad*-1)/(good+bad+neutral)}</>
+  const displayPositive = () => <>{good*100/(good+bad+neutral)}%</>
   if (good+bad+neutral > 0){
   return(
   <div>
-    <Display text={"statistics"} />
-    <p>good {good}</p>
-    <p>neutral {neutral}</p>
-    <p>bad {bad}</p>
-    <p>all {good+bad+neutral}</p>
-    <p>{displayAverage()}</p>
-    <p>{displayPositive()}</p>
-
-
-
-    
+    <StatisticLine text="good:" count={good}/>
+    <StatisticLine text="neutral:" count={neutral}/>
+    <StatisticLine text="bad:" count={bad}/>
+    <StatisticLine text="all:" count = {bad+good+neutral} />
+    <StatisticLine text="average:" count={displayAverage()}/>
+    <StatisticLine text="positive:" count={displayPositive()}/>
   </div>)}
   else{
     return (
     <>
-    <Display text={"statistics"} />
     <p>No feedback given</p>
     </>)
   }
@@ -100,15 +100,8 @@ const App = () => {
       <Button onClick={goodIncrement} text="good"/>
       <Button onClick={neutralIncrement} text="neutral"/>
       <Button onClick={badIncrement} text="bad"/>
-
+      <Display text={"statistics"} />
       <Statistics good={good} bad={bad} neutral={neutral}/>
-      {/* <Display text={"statistics"}/>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {bad+neutral+good}</p> */}
-      {/* <DisplayAverage />
-      <DisplayPositive /> */}
       
     </div>
   )
