@@ -88,6 +88,8 @@ const Statistics = ({good, bad, neutral}) => {
   }
 
 }
+
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -103,7 +105,7 @@ const App = () => {
   const [votes, setVotes] = useState(Array(8).fill(0))
   
   const incrementVote = (x) => {
-    const copy = {...votes}
+    const copy = [...votes]
     copy[x] += 1
     setVotes(copy)
 
@@ -115,11 +117,15 @@ const App = () => {
 
   return (
     <div>
+      <Display text="Anecdote of the day" />
       {anecdotes[selected]}
       <p><strong>has votes:</strong> {votes[selected]}</p>
       <br/>
-      <button onClick={()=>incrementVote(selected)}>vote</button>
-      <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>next anecdote</button>
+      <Button onClick={() => incrementVote(selected)} text={"vote"} />
+      <Button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))} text={"next anecdote"}/>
+      <Display text="Anecdote with most votes" />
+      {anecdotes[votes.indexOf(Math.max(...votes))]}
+
       <br/>
     </div>
   )
